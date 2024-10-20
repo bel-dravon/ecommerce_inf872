@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -11,7 +12,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -19,7 +21,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -27,15 +29,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'total_price' => 'required|numeric',
+            'status' => 'required|in:pendiente,completo,cancelado',
+        ]);
+
+        Order::create($validatedData);
+
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) 
     {
-        //
+        $order = Order::findOrFail($id);
+        return view('orders.show', compact('order'));
     }
 
     /**
@@ -43,7 +54,8 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        return view('orders.edit', compact('order'));
     }
 
     /**
@@ -51,7 +63,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'total_price' => 'required|numeric',
+            'status' => 'required|in:pendiente,completo,cancelado',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->update($validatedData);
+
+        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 
     /**
@@ -59,6 +80,9 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
     }
 }

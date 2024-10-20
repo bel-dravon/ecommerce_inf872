@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderItemController extends Controller
@@ -11,7 +12,8 @@ class OrderItemController extends Controller
      */
     public function index()
     {
-        //
+        $orderItems = OrderItem::all();
+        return view('order_items.index', compact('orderItems'));
     }
 
     /**
@@ -19,7 +21,7 @@ class OrderItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('order_items.create');
     }
 
     /**
@@ -27,7 +29,16 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+        ]);
+
+        OrderItem::create($validatedData);
+
+        return redirect()->route('order_items.index')->with('success', 'Order item created successfully.');
     }
 
     /**
@@ -35,7 +46,8 @@ class OrderItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $orderItem = OrderItem::findOrFail($id);
+        return view('order_items.show', compact('orderItem'));
     }
 
     /**
@@ -43,7 +55,8 @@ class OrderItemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $orderItem = OrderItem::findOrFail($id);
+        return view('order_items.edit', compact('orderItem'));
     }
 
     /**
@@ -51,7 +64,17 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+        ]);
+
+        $orderItem = OrderItem::findOrFail($id);
+        $orderItem->update($validatedData);
+
+        return redirect()->route('order_items.index')->with('success', 'Order item updated successfully.');
     }
 
     /**
@@ -59,6 +82,9 @@ class OrderItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $orderItem = OrderItem::findOrFail($id);
+        $orderItem->delete();
+
+        return redirect()->route('order_items.index')->with('success', 'Order item deleted successfully.');
     }
 }
