@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])->name('order_items.invoice');
     Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])
         ->name('order_items.generateInvoice');
+    Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.my');
 });
 
 require __DIR__ . '/auth.php';

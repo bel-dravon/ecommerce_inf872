@@ -17,6 +17,13 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    public function myOrders()
+    {
+        $user = auth()->user();
+        $orders = $user->orders;
+        return view('orders.my-orders', compact('orders'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
