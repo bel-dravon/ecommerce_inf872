@@ -87,7 +87,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                             <button type="submit" class="btn btn-warning">
                                 <i class="fas fa-save mr-1"></i> Actualizar Producto
                             </button>
