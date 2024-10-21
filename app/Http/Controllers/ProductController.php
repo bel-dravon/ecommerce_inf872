@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:Admin.edit')->only('index');
+        $this->middleware('can:Admin.edit')->only('edit,update');
         $this->middleware('can:Admin.destroy')->only('destroy'); 
     }
     public function index()

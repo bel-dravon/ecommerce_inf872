@@ -39,14 +39,18 @@
                                 <a href="{{ route('products.show', $product) }}" class="btn btn-outline-primary">
                                     <i class="fas fa-eye me-2"></i>Ver detalles
                                 </a>
+                                @can('Admin.edit')
                                 <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"
                                     title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                @endcan
+                                @can('Admin.destroy')
                                 <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal" title="Eliminar">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>
+                                </button>    
+                                @endcan
                             </div>
                         </div>
                     </div>
