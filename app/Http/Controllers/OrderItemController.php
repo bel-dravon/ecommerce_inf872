@@ -8,9 +8,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('can:Admin.index')->only('index');
+        $this->middleware('can:Admin.destroy')->only('destroy');
+        $this->middleware('can:Admin.edit')->only('edit,update');
+    }
+
     public function index()
     {
         $orderItems = OrderItem::all();

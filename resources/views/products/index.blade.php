@@ -35,21 +35,19 @@
                             </div>
                         </div>
                         <div class="card-footer bg-transparent border-top-0">
-                            <div class="d-grid">
-                                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-primary">
+                            <div class="d-grid gap-2">
+                                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-primary mb-2">
                                     <i class="fas fa-eye me-2"></i>Ver detalles
                                 </a>
                                 @can('Admin.edit')
-                                <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"
-                                    title="Editar">
+                                <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm mb-2" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 @endcan
                                 @can('Admin.destroy')
-                                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" title="Eliminar">
+                                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" title="Eliminar">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>    
+                                </button>
                                 @endcan
                             </div>
                         </div>
