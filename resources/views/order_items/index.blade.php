@@ -40,7 +40,7 @@
             <tr>
                 <td>{{ $orderItem->id }}</td>
                 <td>{{ $orderItem->order_id }}</td>
-                <td>{{ $orderItem->product_id }}</td>
+                <td>{{ $orderItem->product->name }}</td>
                 <td>{{ $orderItem->quantity }}</td>
                 <td>${{ number_format($orderItem->price, 2) }}</td>
                 <td>
