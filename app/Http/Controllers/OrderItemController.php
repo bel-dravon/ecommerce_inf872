@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderItemController extends Controller
 {
@@ -86,5 +87,17 @@ class OrderItemController extends Controller
         $orderItem->delete();
 
         return redirect()->route('order_items.index')->with('success', 'Order item deleted successfully.');
+    }
+
+    public function generateInvoice(string $id)
+    {
+        $orderItem = OrderItem::findOrFail($id);
+        $order = $orderItem->order;
+    
+        $order->load('user', 'orderItems.product');
+    
+        $pdf = PDF::loadView('order_items.invoice', compact('order'));
+    
+        return $pdf->stream('factura_orden_' . $order->id . '.pdf');
     }
 }

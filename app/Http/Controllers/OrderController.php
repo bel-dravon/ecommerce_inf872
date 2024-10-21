@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -43,7 +44,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) 
+    public function show(string $id)
     {
         $order = Order::findOrFail($id);
         return view('orders.show', compact('order'));
@@ -84,5 +85,12 @@ class OrderController extends Controller
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
+    }
+
+    public function generatePDF($id)
+    {
+        $order = Order::findOrFail($id); 
+        $pdf = PDF::loadView('orders.invoice', compact('order'));
+        return $pdf->stream('factura_orden_' . $order->id . '.pdf');
     }
 }
