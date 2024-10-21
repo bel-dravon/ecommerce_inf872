@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use HasRoles;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Admin.edit')->only('index');
+        $this->middleware('can:Admin.destroy')->only('destroy'); 
+    }
     public function index()
     {
         $products = Product::all();
