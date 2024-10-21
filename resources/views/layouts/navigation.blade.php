@@ -8,9 +8,16 @@
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" >
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="color: white" class="text-uppercase">
                         <i class="fas fa-store mr-2"></i>
                         {{ __('Mi E-commerce') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('orders.my')" :active="request()->routeIs('orders.my')" style="color: white" class="text-uppercase">
+                        <i class="fas fa-store mr-2"></i>
+                        {{ __('Mis Pedidos') }}
                     </x-nav-link>
                 </div>
             </div>
