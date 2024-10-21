@@ -34,14 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/orders', OrderController::class);
     Route::resource('/order_items', OrderItemController::class);
     Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/orders/{order}/pdf', [OrderController::class, 'generatePDF'])->name('orders.generatePDF');
+    Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])->name('order_items.invoice');
+    Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])
+        ->name('order_items.generateInvoice');
 });
 
-require __DIR__.'/auth.php';
-Route::resource('products', ProductController::class);
-Route::resource('orders', OrderController::class);
-Route::resource('order_items', OrderItemController::class);
-Route::get('/orders/{order}/pdf', [OrderController::class, 'generatePDF'])->name('orders.generatePDF');
-Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])->name('order_items.invoice');
-Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])
-    ->name('order_items.generateInvoice');
-
+require __DIR__ . '/auth.php';
