@@ -5,7 +5,11 @@
 @section('content')
     <div class="container my-5">
         <h1 class="mb-4 text-center">Catálogo de Productos</h1>
-
+        @can('Admin.edit')
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus-circle mr-1"></i> Crear Item de Orden
+        </a>
+        @endcan
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
