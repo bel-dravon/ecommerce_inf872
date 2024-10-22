@@ -20,6 +20,20 @@
                         {{ __('Mis Pedidos') }}
                     </x-nav-link>
                 </div>
+                @can('Admin.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" style="color: white" class="text-uppercase">
+                        <i class="fas fa-store mr-2"></i>
+                        {{ __('Ordenes') }}
+                    </x-nav-link>
+                </div> 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('order_items.index')" :active="request()->routeIs('order_items.index')" style="color: white" class="text-uppercase">
+                        <i class="fas fa-store mr-2"></i>
+                        {{ __('Item Ordenes') }}
+                    </x-nav-link>
+                </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
