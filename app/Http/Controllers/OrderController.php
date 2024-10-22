@@ -105,14 +105,42 @@ class OrderController extends Controller
         return $pdf->stream('factura_orden_' . $order->id . '.pdf');
     }
 
-    public function simulatePayment($id)
+    public function processPayment(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        
+        // Validar que la orden esté pendiente
+        if ($order->status !== 'pendiente') {
+            return redirect()->route('orders.show', $order->id)
+                ->with('error', 'Esta orden no puede ser procesada.');
+        }
+    
+        // Validar el método de pago
+        $request->validate([
+            'payment_method' => 'required|in:credit_card,paypal,cash'
+        ]);
+    
+        // Simular procesamiento del pago (2 segundos)
+        sleep(2);
+        
+        // Actualizar el estado de la orden
         $order->status = 'completo';
         $order->save();
-
+    
         return redirect()->route('orders.show', $order->id)
-            ->with('success', 'Pago simulado exitosamente. El estado de la orden ha sido actualizado a completado.');
+            ->with('success', 'Pago procesado exitosamente.');
+    }
+    
+    public function showPayment($id)
+    {
+        $order = Order::findOrFail($id);
+        
+        if ($order->status !== 'pendiente') {
+            return redirect()->route('orders.show', $order->id)
+                ->with('error', 'Esta orden no puede ser pagada.');
+        }
+    
+        return view('orders.payment', compact('order'));
     }
 
     public function cancel($id)

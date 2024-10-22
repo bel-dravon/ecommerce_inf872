@@ -40,8 +40,9 @@ Route::middleware('auth')->group(function () {
         ->name('order_items.generateInvoice');
     Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.my');
     Route::get('/orders/{order}/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
-    Route::post('/orders/{order}/simulate-payment', [OrderController::class, 'simulatePayment'])
-        ->name('orders.simulatePayment');
+    // web.php
+    Route::get('/orders/{id}/payment', [OrderController::class, 'showPayment'])->name('orders.showPayment');
+    Route::post('/orders/{id}/process-payment', [OrderController::class, 'processPayment'])->name('orders.processPayment');
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])
         ->name('orders.cancel');
     Route::put('/order_items/{orderItem}/edit-client', [OrderItemController::class, 'editClient'])

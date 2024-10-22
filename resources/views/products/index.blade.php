@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-5">
             @foreach ($products as $product)
                 <div class="col">
                     <div class="card h-100 shadow-sm">

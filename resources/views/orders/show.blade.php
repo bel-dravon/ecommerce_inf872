@@ -162,12 +162,9 @@
             <i class="fas fa-arrow-left"></i> Volver a Productos
         </a>
         <div>
-            <form action="{{ route('orders.simulatePayment', $order->id) }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-dark">
-                    <i class="fa fa-dollar-sign"></i> Pagar
-                </button>
-            </form>
+            <a href="{{ route('orders.showPayment', $order->id) }}" class="btn btn-primary">
+                <i class="fa fa-credit-card"></i> Procesar Pago
+            </a>
             <a href="{{ route('orders.generatePDF', $order->id) }}" class="btn btn-success">
                 <i class="fas fa-file-pdf"></i> Descargar Factuar
             </a>

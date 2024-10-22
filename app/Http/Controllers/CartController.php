@@ -27,8 +27,7 @@ class CartController extends Controller
         );
 
         $this->updateOrderTotal($order);
-
-        return redirect()->back()->with('success', 'Producto añadido al carrito');
+        return redirect()->route('dashboard')->with('success', 'Producto añadido al carrito');
     }
 
     private function updateOrderTotal(Order $order)

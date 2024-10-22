@@ -6,30 +6,38 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link style="color: white; text-decoration: none;" class="text-uppercase">
+                        <i class="fas fa-store mr-2"></i>
+                        Mi E-commerce
+                    </x-nav-link>
+                </div>
+
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="color: white" class="text-uppercase">
-                        <i class="fas fa-store mr-2"></i>
-                        {{ __('Mi E-commerce') }}
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" style="color: white; text-decoration: none;" class="text-uppercase">
+                        <i class="fas fa-box-open mr-2"></i>
+                        {{ __('Productos') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('orders.my')" :active="request()->routeIs('orders.my')" style="color: white" class="text-uppercase">
-                        <i class="fas fa-store mr-2"></i>
+                    <x-nav-link :href="route('orders.my')" :active="request()->routeIs('orders.my')" style="color: white; text-decoration: none;" class="text-uppercase">
+                        <i class="fas fa-shopping-cart mr-2"></i>
                         {{ __('Mis Pedidos') }}
                     </x-nav-link>
                 </div>
                 @can('Admin.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" style="color: white" class="text-uppercase">
-                        <i class="fas fa-store mr-2"></i>
+                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')" style="color: white; text-decoration: none;" class="text-uppercase">
+                        <i class="fas fa-clipboard-list mr-2"></i>
                         {{ __('Ordenes') }}
                     </x-nav-link>
                 </div> 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('order_items.index')" :active="request()->routeIs('order_items.index')" style="color: white" class="text-uppercase">
-                        <i class="fas fa-store mr-2"></i>
+                    <x-nav-link :href="route('order_items.index')" :active="request()->routeIs('order_items.index')" style="color: white; text-decoration: none;" class="text-uppercase">
+                        <i class="fas fa-boxes mr-2"></i>
                         {{ __('Item Ordenes') }}
                     </x-nav-link>
                 </div>
