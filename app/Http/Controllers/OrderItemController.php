@@ -8,26 +8,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $orderItems = OrderItem::all();
         return view('order_items.index', compact('orderItems'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('order_items.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -42,27 +33,18 @@ class OrderItemController extends Controller
         return redirect()->route('order_items.index')->with('success', 'Order item created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $orderItem = OrderItem::findOrFail($id);
         return view('order_items.show', compact('orderItem'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $orderItem = OrderItem::findOrFail($id);
         return view('order_items.edit', compact('orderItem'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
@@ -78,9 +60,6 @@ class OrderItemController extends Controller
         return redirect()->route('order_items.index')->with('success', 'Order item updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $orderItem = OrderItem::findOrFail($id);
@@ -93,11 +72,27 @@ class OrderItemController extends Controller
     {
         $orderItem = OrderItem::findOrFail($id);
         $order = $orderItem->order;
-    
+
         $order->load('user', 'orderItems.product');
-    
+
         $pdf = PDF::loadView('order_items.invoice', compact('order'));
-    
+
         return $pdf->stream('factura_orden_' . $order->id . '.pdf');
+    }
+
+    public function editClient(Request $request, OrderItem $orderItem)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $orderItem->quantity = $request->quantity;
+        $orderItem->save();
+
+        // Recalcular el total de la orden
+        $order = $orderItem->order;
+        $order->updateTotals();
+
+        return redirect()->back()->with('success', 'Cantidad actualizada correctamente');
     }
 }

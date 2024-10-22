@@ -20,4 +20,19 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function updateTotals()
+    {
+        $total = $this->orderItems->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+
+        // Agregamos el shipping_cost si existe
+        if ($this->shipping_cost) {
+            $total += $this->shipping_cost;
+        }
+
+        $this->total_price = $total;
+        $this->save();
+    }
 }

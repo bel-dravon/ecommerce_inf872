@@ -39,6 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::get('order_items/{id}/invoice', [OrderItemController::class, 'generateInvoice'])
         ->name('order_items.generateInvoice');
     Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.my');
+    Route::get('/orders/{order}/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
+    Route::post('/orders/{order}/simulate-payment', [OrderController::class, 'simulatePayment'])
+        ->name('orders.simulatePayment');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])
+        ->name('orders.cancel');
+    Route::put('/order_items/{orderItem}/edit-client', [OrderItemController::class, 'editClient'])
+        ->name('order_items.editClient');
 });
 
 require __DIR__ . '/auth.php';

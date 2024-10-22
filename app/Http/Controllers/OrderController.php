@@ -100,4 +100,24 @@ class OrderController extends Controller
         $pdf = PDF::loadView('orders.invoice', compact('order'));
         return $pdf->stream('factura_orden_' . $order->id . '.pdf');
     }
+
+    public function simulatePayment($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'completo';
+        $order->save();
+
+        return redirect()->route('orders.show', $order->id)
+            ->with('success', 'Pago simulado exitosamente. El estado de la orden ha sido actualizado a completado.');
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'cancelado';
+        $order->save();
+
+        return redirect()->route('orders.show', $order->id)
+            ->with('info', 'La orden ha sido cancelada.');
+    }
 }
