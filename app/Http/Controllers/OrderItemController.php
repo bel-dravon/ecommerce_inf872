@@ -65,7 +65,7 @@ class OrderItemController extends Controller
         $orderItem = OrderItem::findOrFail($id);
         $orderItem->delete();
 
-        return redirect()->route('order_items.index')->with('success', 'Order item deleted successfully.');
+        return redirect()->route('orders.show', $orderItem->order_id)->with('success', 'Order item deleted successfully.');
     }
 
     public function generateInvoice(string $id)
